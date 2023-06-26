@@ -2,7 +2,7 @@
 
 
 The steps are the following: 
-1. __Identify the causal relationships:__ Analyze the edges of the causal graph obtained from the PC algorithm to identify the causal relationships between variables. Each edge represents a causal relationship, where the tail variable influences the head variable.
+1. __Identify the causal relationships:__ Analyze the edges of the causal graph obtained from the FCI algorithm to identify the causal relationships between variables. Each edge represents a causal relationship, where the tail variable influences the head variable.
 2. __Determine the direction of causality:__ Determine the direction of causality based on the direction of the edges in the causal graph. For example, if there is an edge from variable A to variable B, it indicates that A causally influences B.
 3. __Create new causal variables:__ Based on the identified causal relationships, you can create new variables by applying causal transformations to the existing variables. Here are a few examples:
     1. __Interaction variables:__ If variable A causally influences variable B and you want to capture the interaction effect, you can create an interaction variable by multiplying A and B.
