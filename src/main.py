@@ -46,7 +46,7 @@ for edge in edges:
         edges.remove(edge)
 
 # Remove edges were latent common cause exists 
-# (we need to do this step 4 times to remove all common causes for some reason)
+# (we need to do this step 4 times to remove all common causes)
 if remove_common_causes:
     for edge in edges:
         if str(edge.get_endpoint1()) == "ARROW" and str(edge.get_endpoint2()) == "ARROW":
