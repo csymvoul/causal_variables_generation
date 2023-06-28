@@ -27,7 +27,8 @@ class CausalGraph():
         self.edges = None
         self.nodes = None
         self.pdy = None
-        self.path = "figures/"
+        self.figures_path = "figures/"
+        self.dot_path = "dot_files/"
         self.figure_file_extension = ".png"
 
     def set_data(self) -> None:
@@ -128,8 +129,9 @@ class CausalGraph():
 
     def save_graph_as_figure(self) -> None:
         self.__replace_node_numbers_to_names()
-        self.pdy.write_png(self.path + self.independence_test + "_" +self.dataset_title + self.class_used_str + self.no_d_sep_str + self.figure_file_extension)
+        self.pdy.write_png(self.figures_path + self.independence_test + "_" +self.dataset_title + self.class_used_str + self.no_d_sep_str + self.figure_file_extension)
         
-
+    def save_graph_as_dot(self) -> None:
+        self.pdy.write_raw(self.dot_path + self.independence_test + "_" +self.dataset_title + self.class_used_str + self.no_d_sep_str + ".dot")
 
 
