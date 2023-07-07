@@ -90,6 +90,7 @@ class CausalGraph():
                     self.edges.remove(edge)
             self.no_d_sep = True
             self.no_d_sep_str = "_no_d_separation"
+        # * Commented out this part because it may not be necessary
         # self.__remove_ancestor_edges()
         # self.__remove_common_causal_effect_edges()
         # self.__remove_cirle_edges()
