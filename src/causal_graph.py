@@ -90,10 +90,13 @@ class CausalGraph():
                     self.edges.remove(edge)
             self.no_d_sep = True
             self.no_d_sep_str = "_no_d_separation"
-        self.__remove_ancestor_edges()
-        self.__remove_common_causal_effect_edges()
-        self.__remove_cirle_edges()
+        # self.__remove_ancestor_edges()
+        # self.__remove_common_causal_effect_edges()
+        # self.__remove_cirle_edges()
     
+    # TODO: Implement this method
+    # def identify_
+
     def __remove_cirle_edges(self) -> None:
         for edge in self.edges:
             if str(edge.get_endpoint1()) == "CIRCLE":
