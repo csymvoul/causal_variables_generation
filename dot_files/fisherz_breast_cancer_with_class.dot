@@ -67,6 +67,7 @@ fontsize=18;
 0 -> 3  [arrowhead=normal, arrowtail=none, color=green3, dir=both, penwidth=2.0];
 0 -> 9  [arrowhead=normal, arrowtail=normal, dir=both];
 0 -> 20  [arrowhead=normal, arrowtail=normal, dir=both];
+1 -> 21  [arrowhead=odot, arrowtail=odot, dir=both];
 2 -> 7  [arrowhead=normal, arrowtail=normal, dir=both];
 2 -> 22  [arrowhead=normal, arrowtail=normal, dir=both];
 4 -> 5  [arrowhead=normal, arrowtail=normal, dir=both];

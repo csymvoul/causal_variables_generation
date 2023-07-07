@@ -8,7 +8,7 @@ initial_data = load_breast_cancer()
 
 causal_graph = CausalGraph(initial_data_array=initial_data, 
                            class_used=True, 
-                           no_d_sep=True, 
+                           no_d_sep=False, 
                            remove_common_causes=False, 
                            independence_test="fisherz")
 causal_graph.create_graph()
