@@ -20,6 +20,8 @@ class CausalGraph():
         self.class_used_str = ""
         self.no_d_sep_str = ""
         self.data = initial_data_array.data
+        self.df = None
+        self.causal_df = None
         self.target = initial_data_array.target
         self.dataset_title = initial_data_array.filename.replace(".csv", "").replace(".gz", "")
         self.features = initial_data_array.feature_names
@@ -37,6 +39,12 @@ class CausalGraph():
     def get_data(self) -> DataFrame:
         return self.data
 
+    def get_df(self) -> DataFrame:
+        return self.df
+
+    def get_causal_df(self) -> DataFrame:
+        return self.causal_df
+
     def set_target(self) -> None:
         self.target = self.initial_data_array.target
 
@@ -48,6 +56,9 @@ class CausalGraph():
 
     def set_features(self) -> None:
         self.features = self.initial_data_array.feature_names
+
+    def get_data_by_feature(self, feature) -> DataFrame:
+        return self.df[feature]
 
     def set_class_used(self, class_used) -> None:
         self.class_used = class_used
@@ -66,9 +77,15 @@ class CausalGraph():
 
     def get_edges(self):
         return self.edges
-    
+
     def get_nodes(self):
         return self.nodes
+    
+    def get_nodes_names(self):
+        return [node.get_name() for node in self.nodes]
+
+    def get_data_with_causal_variables(self):
+        return self.data_with_causal_variables
 
     def create_graph(self) -> None:
         # self.set_data()
@@ -80,6 +97,9 @@ class CausalGraph():
             self.data = np.column_stack((self.initial_data_array.data, self.initial_data_array.target))
             self.features = np.append(self.features, "class")
             self.class_used_str = "_with_class"
+            self.df = DataFrame(self.data, columns=self.features)
+            # Copy self.data to self.data_with_causal_variables
+            self.causal_df = self.df.copy()
         self.G, self.edges = fci(self.data, self.independence_test)
         self.pdy = GraphUtils.to_pydot(self.G)
         self.nodes = self.G.nodes
@@ -96,9 +116,40 @@ class CausalGraph():
         # self.__remove_cirle_edges()
     
     # TODO: Implement this method
-    # def identify_
+    def identify_causal_relations(self) -> None:
+        """
+            `identify_causal_relations` function
 
+            This function identifies the causal relations between the variables. 
+            It iterates through the edges and identifies the causal relations between the variables.
+            If there is a causal relation between the variables, it adds the 
+        """
+
+    # TODO: Implement this method
+    def create_new_causal_variables(self) -> None:
+        pass
+    
+    def get_causal_relations(self) -> None:
+        count = 0 
+        for edge in self.edges:
+            for node in self.nodes: 
+                if node.get_name() == edge.get_node1().get_name():
+                    if str(edge.get_endpoint1()) == "TAIL" and str(edge.get_endpoint2()) == "ARROW":
+                        count += 1
+                        edge_1_data = self.df[node.get_name()]
+                        edge_2_data = self.df[edge.get_node2().get_name()]
+                        self.causal_df[node.get_name()+"_"+edge.get_node2().get_name()] = edge_1_data * edge_2_data
+                        # get data of edge 2
+                    elif str(edge.get_endpoint1()) == "CIRCLE" and str(edge.get_endpoint2()) == "TAIL":
+                        count += 1
+                        edge_1_data = self.df[node.get_name()]
+                        edge_2_data = self.df[edge.get_node2().get_name()]
+                        self.causal_df[node.get_name()+"_"+edge.get_node2().get_name()] = edge_1_data * edge_2_data
+        print(f"Identified {count} causal relations.")
+    
+    # Multiply the data of edge 1 with the data of edge 2 and add it to the data_with_causal_variables
     def __remove_cirle_edges(self) -> None:
+        print("Removing circle edges.")
         for edge in self.edges:
             if str(edge.get_endpoint1()) == "CIRCLE":
                 self.edges.remove(edge)
@@ -107,6 +158,7 @@ class CausalGraph():
                 self.edges.remove(edge)
 
     def __remove_ancestor_edges(self) -> None:
+        print("Removing ancestor edges.")
         for edge in self.edges:
             if str(edge.get_endpoint1()) == "CIRCLE" or str(edge.get_endpoint2()) == "CIRCLE":
                 self.edges.remove(edge)
@@ -115,6 +167,7 @@ class CausalGraph():
                 self.edges.remove(edge)
     
     def __remove_common_causal_effect_edges(self) -> None:
+        print("Removing common causal effect edges.")
         for edge in self.edges:
             if str(edge.get_endpoint1()) == "ARROW" and str(edge.get_endpoint2()) == "ARROW":
                 self.edges.remove(edge)
@@ -126,6 +179,7 @@ class CausalGraph():
                 self.edges.remove(edge)
     
     def __replace_node_numbers_to_names(self) -> None:
+        print("Replacing node numbers to names.")
         for i, node in enumerate(self.nodes):
             node.set_name(self.features[int(node.get_name().replace("X", "")) - 1])
             self.nodes[i] = node
@@ -133,9 +187,11 @@ class CausalGraph():
 
     def save_graph_as_figure(self) -> None:
         self.__replace_node_numbers_to_names()
+        print("Saving figure to " + self.figures_path + self.independence_test + "_" +self.dataset_title + self.class_used_str + self.no_d_sep_str + self.figure_file_extension)
         self.pdy.write_png(self.figures_path + self.independence_test + "_" +self.dataset_title + self.class_used_str + self.no_d_sep_str + self.figure_file_extension)
         
     def save_graph_as_dot(self) -> None:
         self.pdy.write_raw(self.dot_path + self.independence_test + "_" +self.dataset_title + self.class_used_str + self.no_d_sep_str + ".dot")
 
-
+    def save_causal_df_as_csv(self) -> None: 
+        self.causal_df.to_csv("causal_df.csv", index=False)
