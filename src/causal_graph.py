@@ -193,5 +193,10 @@ class CausalGraph():
     def save_graph_as_dot(self) -> None:
         self.pdy.write_raw(self.dot_path + self.independence_test + "_" +self.dataset_title + self.class_used_str + self.no_d_sep_str + ".dot")
 
+    def save_df_as_csv(self) -> None:
+        print("Saving df.csv")
+        self.df.to_csv("data/df.csv", index=False)
+
     def save_causal_df_as_csv(self) -> None: 
-        self.causal_df.to_csv("causal_df.csv", index=False)
+        print("Saving causal_df.csv")
+        self.causal_df.to_csv("data/causal_df.csv", index=False)
