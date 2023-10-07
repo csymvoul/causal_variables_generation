@@ -16,3 +16,17 @@ The steps are the following:
 4. __Incorporate new variables into the analysis:__ Once you have created the new causal variables, you can incorporate them into your analysis or modeling pipeline. These variables can provide additional insights or improve the predictive performance of your models by capturing the causal relationships present in the data.
 
 Remember that creating new causal variables requires domain knowledge and understanding of the underlying causal relationships. It is essential to carefully consider the causal mechanisms and interpret the new variables in the context of your specific problem domain.
+
+If you are interested please consider citing our article:
+
+@ARTICLE{SymvoulidisMobilityDataPlacement,
+  author={Symvoulidis, Chrysostomos and Kiourtis, Athanasios and Marinos, George and Tom-Ata, Jean-Didier Totow and Manias, George and Mavrogiorgou, Argyro and Kyriazis, Dimosthenis},
+  journal={IEEE Transactions on Computers}, 
+  title={A User Mobility-based Data Placement Strategy in a Hybrid Cloud / Edge Environment using a Causal-aware Deep Learning Network}, 
+  year={2023},
+  volume={},
+  number={},
+  pages={1-14},
+  publisher={IEEE},
+  doi={10.1109/TC.2023.3311921}
+}
